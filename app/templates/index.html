@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+    <title>Document</title>
+
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="assets/icons/favicon.ico"> -->
+    <link rel="stylesheet" href="/css/main.css" media="all">
+    <script defer src="/js/index.js" charset="utf-8"></script>
+
+  </head>
+  <body>
+
+    <div class="page">
+      <div class="page__container">
+
+        <div class="page__container__content">
+          <form id="servoInput" class="servo-input">
+            {{range .}}
+              <div class="servo-input__range-box">
+                <input
+                  data-js-range-servo-input
+                  class="servo-input__range-box__range-input"
+                  type="range"
+                  value="{{.Min}}"
+                  min="{{.Min}}"
+                  max="{{.Max}}"
+                />
+                <span
+                  data-js-range-display
+                  class="servo-input__range-box__range-value"
+                >
+                  {{.Min}}
+                </span>
+              </div>
+            {{end}}
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+  </body>
+</html>
