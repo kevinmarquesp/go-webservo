@@ -1,7 +1,7 @@
 #define AMOUNT 3
 
-const uint8_t minarr[AMOUNT] = {  0,   0,   0};
-const uint8_t maxarr[AMOUNT] = {180, 180, 180};
+const uint8_t minarr[AMOUNT] = {  0,  30,  10};
+const uint8_t maxarr[AMOUNT] = {180, 150,  90};
 
 void setup(void)
 {

@@ -22,4 +22,10 @@ func main() {
     if err != nil {
         log.Fatal(err)
     }
+    fmt.Println(" *\n *")
+
+    err = controllers.StartLocalServer()
+    if err != nil {
+        log.Fatal(err)
+    }
 }

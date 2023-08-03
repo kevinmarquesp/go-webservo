@@ -7,6 +7,7 @@ import (
 
 	"errors"
 	"fmt"
+    "net/http"
 )
 
 // Lista a lista de portas disponíveis para a comunicação serial no sistema e
@@ -50,12 +51,31 @@ func GetServoValues() error {
     if err != nil {
         return err
     }
-    fmt.Println("[log] Output received:", command)
+    fmt.Printf("[log] Output received: %s", command)
 
     // expected command: "gws_conf"
     err = RunCmdConfig(command)
     if err != nil {
         return err
+    }
+
+    return nil
+}
+
+// Inicia de fato o servidor local, configurando as rotas para os arquivos de
+// estilo (css) e scripts (javascript); as funções que cada endereço deve
+// executar devem estar em outro arquivo ou módulo.
+func StartLocalServer() error {
+    fmt.Println("[step 3] Startup the local server!")
+
+    http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("app/css"))))
+    http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("app/js"))))
+
+    http.HandleFunc("/", RenderHomePage)
+
+    err := http.ListenAndServe(":8080", nil)
+    if err != nil {
+        return nil
     }
 
     return nil
