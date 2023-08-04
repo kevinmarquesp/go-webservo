@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-var tmpl = template.Must(template.ParseFiles("./app/templates/index.html"))
+var tmpl = template.Must(template.ParseFiles("./www/index.html"))
 
 // Apenas renderiza o HTML principal quando a página for acessada por um
 // navegador qualquer; lembrando que as outras variáveis que essa função

@@ -68,8 +68,7 @@ func GetServoValues() error {
 func StartLocalServer() error {
     fmt.Println("[step 3] Startup the local server!")
 
-    http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("app/css"))))
-    http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("app/js"))))
+    http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./www/static/"))))
 
     http.HandleFunc("/", RenderHomePage)
     http.HandleFunc("/send", SendServoData)
