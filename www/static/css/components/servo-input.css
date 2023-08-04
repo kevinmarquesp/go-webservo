@@ -1,0 +1,21 @@
+.servo-input {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.servo-input .si-range-box {
+    display: flex;
+    gap: 1rem;
+}
+
+.servo-input .si-range-box .si-value-display {
+    width: 2rem;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.servo-input .si-range-box .si-range-input {
+    accent-color: var(--clr-base-fg-alt);
+    width: 100%;
+}

@@ -1,10 +1,28 @@
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@import "./base/reset.css";
+@import "./base/colors.css";
+@import "./base/variables.css";
+@import "./components/card.css";
+@import "./components/servo-input.css";
+
+:root {
+    background-color: var(--clr-base-bg);
+    color: var(--clr-base-fg);
+    font-family: sans-serif;
 }
 
 body {
-  background-color: black;
-  color: white;
+    width: 100vw;
+    height: 100vh;
+
+    display: grid;
+    place-items: center;
+}
+
+#app {
+    width: min(var(--bp-sm), 100%);
+    padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
 }

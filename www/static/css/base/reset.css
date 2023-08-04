@@ -1,0 +1,52 @@
+/** NOTE: Reset adapted from: http://meyerweb.com/eric/tools/css/reset/ */
+
+*, *::before, *::after {
+	margin: 0;
+	padding: 0;
+
+	border: 0;
+    box-sizing: border-box;
+
+	font: inherit;
+    background: inherit;
+	vertical-align: baseline;
+}
+
+body {
+	line-height: 1;
+    height: 100vh;
+}
+
+table {
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/** DESC: HTML5 display-role reset for older browsers */
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: none;
+}
+
+button, input {
+    background-color: inherit;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+ol, ul {
+	list-style: none;
+}

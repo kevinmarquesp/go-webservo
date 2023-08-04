@@ -1,0 +1,21 @@
+.page-card {
+    min-width: 100%;
+
+    border: 2px solid var(--clr-base-fg-alt);
+    box-shadow: -8px 8px 0 var(--clr-base-fg-alt);
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+.card-body > * {
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    text-transform: uppercase;
+    font-weight: bolder;
+    color: var(--clr-base-fg-alt);
+    font-size: 1.3rem;
+}
