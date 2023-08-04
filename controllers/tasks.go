@@ -72,6 +72,7 @@ func StartLocalServer() error {
     http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("app/js"))))
 
     http.HandleFunc("/", RenderHomePage)
+    http.HandleFunc("/send", SendServoData)
 
     err := http.ListenAndServe(":8080", nil)
     if err != nil {
