@@ -1,37 +1,43 @@
-"use strict"
+import { info, error, warn } from './utils/log.js'
+import { sendData } from './arduino/send.js'
+import { formatMovedata } from './arduino/format.js'
 
-function formatServoInputData(inputArr) {
-  let buff = ''
 
-  inputArr.forEach(($slider, key) => {
-    buff += key === inputArr.length - 1 ?
-      `${$slider.value}` : `${$slider.value} `
-  })
+/**
+ * Constants and config variables
+ * ------------------------------ */
 
-  return buff
-}
+const $displayArr = document.querySelectorAll('[data-js-range-display]')
+const $rangeArr = document.querySelectorAll('[data-js-range-servo-input]')
 
-function sendServoDataViaAJAX(inputArr, conn, url) {
-  const data = formatServoInputData(inputArr)
+const url = "/send"
+const xhr = new XMLHttpRequest()
 
-  conn.open('POST', url, true)
-  conn.send(data)
-}
 
-const servoDisplayArr = document.querySelectorAll('[data-js-range-display]')
-const servoInputArr = document.querySelectorAll('[data-js-range-servo-input]')
+/**
+ * Inform the developer if something went wrong
+ * -------------------------------------------- */
 
-const sendUrl = "http://localhost:8080/send"
-const xhrConn = new XMLHttpRequest()
+info(`Address to send data: ${url}`)
 
-sendServoDataViaAJAX(servoInputArr, xhrConn, sendUrl)
+if (!$displayArr.length)
+    error('The display array is not defined properly...')
 
-servoInputArr.forEach(($slider, key) => {
-  const $display = servoDisplayArr[key]
+if (!$rangeArr.length)
+    error('Could not find any rang input elements...')
 
-  $slider.oninput = () => {
-    $display.innerText = $slider.value
 
-    sendServoDataViaAJAX(servoInputArr, xhrConn, sendUrl)
-  }
+/** Actual important code
+ * ---------------------- */
+
+sendData(xhr, url, formatMovedata($rangeArr))
+
+$rangeArr.forEach(($s, key) => {
+    const $d = $displayArr[key]
+
+    $s.oninput = () => {
+        $d.innerText = $s.value
+
+        sendData(xhr, url, formatMovedata($rangeArr))
+    }
 })

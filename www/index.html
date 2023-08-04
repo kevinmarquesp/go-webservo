@@ -9,7 +9,7 @@
 
     <!-- <link rel="shortcut icon" type="image/x-icon" href="assets/icons/favicon.ico"> -->
     <link rel="stylesheet" href="/static/css/main.css" media="all">
-    <script defer src="/static/js/index.js" charset="utf-8"></script>
+    <script defer type="module" src="/static/js/index.js" charset="utf-8"></script>
 
   </head>
   <body>
@@ -22,13 +22,11 @@
           <h2 class="card-title">
             Controle
           </h2>
-
           <p>
             Se a quantidade dos <em>sliders</em> não bate com a quantidade de
             servo motores, verifique se o <em>sketch</em> foi configurado
             corretamente para se comunicar com essa aplicação web.
           </p>
-
           <form class="servo-input">
             {{range .}}
               <div class="si-range-box">
