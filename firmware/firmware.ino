@@ -16,12 +16,9 @@ void setup(void)
   // that loop will construct the command string to send it after
   for (u8 i = 0; i < SERVO_NUM; ++i)
   {
-    confstr.concat(minarr[i]);
-    confstr.concat('-');
-    confstr.concat(maxarr[i]);
-
-    if (i == SERVO_NUM - 1)
-      confstr.concat(',')
+    confstr.concat(String(minarr[i]) + "-");
+    confstr.concat(i == SERVO_NUM - 1 ?
+       String(maxarr[i]) : String(maxarr[i]) + ",");
   }
 
   Serial.begin(BAUDRATE);
