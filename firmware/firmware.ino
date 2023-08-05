@@ -17,7 +17,7 @@ void setup(void)
   {
     confstr.concat(String(minarr[i]) + "-");
     confstr.concat(i == SERVO_NUM - 1 ?
-       String(maxarr[i]) : String(maxarr[i]) + ",");
+      String(maxarr[i]) : String(maxarr[i]) + ",");
   }
 
   Serial.begin(BAUDRATE);
@@ -38,7 +38,14 @@ void loop(void)
   String data = readfromWebapp();
 
   executeMakemoviment(data, SERVO_NUM, [](u8 pos, u8 deg, u16 _){
-    Motor[pos].write(deg);
+    if (deg < Motor[pos].getMin())
+      Motor[pos].write(Motor[pos].getMin());
+
+    else if (deg > Motor[pos].getMax())
+      Motor[pos].write(Motor[pos].getMax());
+
+    else
+      Motor[pos].write(deg);
   });
 
   executeParallelmoviment(data, SERVO_NUM, [](u8* degarr, u16 vel, u8 buffsize){
