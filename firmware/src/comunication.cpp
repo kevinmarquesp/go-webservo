@@ -7,7 +7,7 @@ String readfromWebapp(void)
 
 void validateCommandstring(String raw, String expected, Command* cmdbuf)
 {
-  if (raw.indexOf(expected) == -1)
+  if (raw.indexOf(expected) != 0)
   {
     cmdbuf->error = true;
     return;
@@ -17,9 +17,8 @@ void validateCommandstring(String raw, String expected, Command* cmdbuf)
   cmdbuf->error = false;
 }
 
-void splitarrayDegstring(String data, char dlmr, void run(u8 pos, u8 val))
+void foreachDegstring(String data, char dlmr, void run(u8, u8, u16), u16 vel)
 {
-  data.replace(" ", "");
   data.concat(',');
 
   u8 j = 0, s = 0;
@@ -37,7 +36,7 @@ void splitarrayDegstring(String data, char dlmr, void run(u8 pos, u8 val))
 
       // only execute if the element is not an empty string
       if (elm.length() > 0)
-        run(j, elm.toInt());
+        run(j, elm.toInt(), vel);
 
       s = i;
       ++j;
@@ -45,7 +44,7 @@ void splitarrayDegstring(String data, char dlmr, void run(u8 pos, u8 val))
   }
 }
 
-void executeMakemoviment(String raw, void run(u8 pos, u8 val))
+void executeMakemoviment(String raw, void run(u8, u8, u16))
 {
   Command cmd;
 
