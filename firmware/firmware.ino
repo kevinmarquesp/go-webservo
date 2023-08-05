@@ -1,33 +1,38 @@
 #include <Servo.h>
 
 #include "src/comunication.h"
+#include "config.h"
 
-#define u8 uint8_t
-
-#define AMOUNT 3
-
-const u8 pinarr[AMOUNT] = {  7,   6,   5};
-const u8 minarr[AMOUNT] = {  0,  30,  10};
-const u8 maxarr[AMOUNT] = {180, 150,  90};
-
-Servo actor[AMOUNT];
+// setting up the global values that handle the servo objects
+u8 pinarr[SERVO_NUM] = PIN_ARRAY;
+u8 minarr[SERVO_NUM] = MIN_ARRAY;
+u8 maxarr[SERVO_NUM] = MAX_ARRAY;
+Servo Motor[SERVO_NUM];
 
 void setup(void)
 {
-  String webconfig = "gws_conf:";
+  String confstr = "gws_conf:";
 
-  for (u8 i = 0; i < AMOUNT; ++i)
+  // that loop will construct the command string to send it after
+  for (u8 i = 0; i < SERVO_NUM; ++i)
   {
-    webconfig.concat(String(minarr[i]) + String("-"));
-    webconfig.concat(i == AMOUNT - 1 ?
-      String(maxarr[i]) : String(maxarr[i]) + String(","));
+    confstr.concat(minarr[i]);
+    confstr.concat('-');
+    confstr.concat(maxarr[i]);
 
-    actor[i].attach(pinarr[i]);
-    actor[i].write(minarr[i]);
+    if (i == SERVO_NUM - 1)
+      confstr.concat(',')
   }
 
-  Serial.begin(9600);
-  Serial.println(webconfig);
+  Serial.begin(BAUDRATE);
+  Serial.println(confstr);
+
+  // and that loop will attach all servos and move them to the min value
+  for (u8 i = 0; i < SERVO_NUM; ++i)
+  {
+    Motor[i].attach(pinarr[i]);
+    Motor[i].write(minarr[i]);
+  }
 }
 
 void loop(void)
@@ -36,7 +41,9 @@ void loop(void)
     return;
 
   String data = readfromWebapp();
+
   executeMakemoviment(data, [](u8 pos, u8 val){
-    actor[pos].write(val);
+    if (pos < SERVO_NUM)
+      Motor[pos].write(val);
   });
 }
