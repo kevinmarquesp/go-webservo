@@ -2,7 +2,10 @@
 
 String readfromWebapp(void)
 {
-  return Serial.readStringUntil('\n');
+  String data = Serial.readStringUntil('\n');
+
+  data.replace(" ", "");
+  return data;
 }
 
 void validateCommandstring(String raw, String expected, Command* cmdbuf)
@@ -59,7 +62,7 @@ void splitString(String data, char dlmr, Strsplit* buff)
   buff->error = false;
 }
 
-void executeMakemoviment(String raw, void run(u8, u8, u16))
+void executeMakemoviment(String raw, u8 buffsize, void run(u8, u8, u16))
 {
   Command cmd;
 
@@ -68,11 +71,10 @@ void executeMakemoviment(String raw, void run(u8, u8, u16))
   if (cmd.error)
     return;
 
-  cmd.arg.replace(" ", "");
   foreachDegstring(cmd.arg, ',', run, 0);
 }
 
-void executeParallelmoviment(String raw, void run(u8 pos, u8 deg, u16 vel))
+void executeParallelmoviment(String raw, u8 buffsize, void run(u8, u8, u16))
 {
   Command cmd;
   Strsplit split;
@@ -81,8 +83,6 @@ void executeParallelmoviment(String raw, void run(u8 pos, u8 deg, u16 vel))
 
   if (cmd.error)
     return;
-
-  cmd.arg.replace(" ", "");
 
   splitString(cmd.arg, '/', &split);
 

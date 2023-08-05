@@ -21,7 +21,7 @@ typedef struct Strsplit
 String readfromWebapp(void);
 void foreachDegstring(String data, char dlmr, void run(u8, u8, u16), u16 vel);
 void splitString(String data, char dlmr, Strsplit* buff);
-
 void validateCommandstring(String raw, String expected, Command* buff);
-void executeMakemoviment(String raw, void run(u8, u8, u16));
-void executeParallelmoviment(String raw, void run(u8, u8, u16));
+
+void executeMakemoviment(String raw, u8 buffsize, void run(u8, u8, u16));
+void executeParallelmoviment(String raw, u8 buffsize, void run(u8, u8, u16));
