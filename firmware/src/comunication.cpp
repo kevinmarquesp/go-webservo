@@ -8,6 +8,34 @@ String readfromWebapp(void)
   return data;
 }
 
+String getallServopos(AdvancedServo* Servoarr, u8 buffsize)
+{
+  String res = "";
+
+  for (u8 i = 0; i < buffsize; ++i)
+    res.concat(i == buffsize - 1 ?
+      Servoarr[i].read() : String(Servoarr[i].read()) + ",");
+
+  return res;
+}
+
+bool isAlldone(AdvancedServo* Servoarr, u8 buffsize)
+{
+  for (u8 i = 0; i < buffsize; ++i)
+  {
+    if (not Servoarr[i].isDone())
+      return false;
+  }
+
+  return true;
+}
+
+void resetallServo(AdvancedServo* Servoarr, u8 buffsize)
+{
+  for (u8 i = 0; i < buffsize; ++i)
+    Servoarr[i].reset();
+}
+
 void validateCommandstring(String raw, String expected, Command* cmdbuf)
 {
   if (raw.indexOf(expected) != 0)
@@ -72,16 +100,18 @@ void executeMakemoviment(String raw, u8 buffsize, void run(u8, u8, u16))
   if (cmd.error)
     return;
 
-  converttoDegstring(cmd.arg, ',', arr);
+  converttoDegstring(cmd.arg, ',', degarr);
 
   for (u8 i = 0; i < buffsize; ++i)
     run(i, degarr[i], 0);
 }
 
-void executeParallelmoviment(String raw, u8 buffsize, void run(u8, u8, u16))
+void executeParallelmoviment(String raw, u8 buffsize, void run(u8*, u16, u8))
 {
   Command cmd;
   Strsplit split;
+  u8 degarr[buffsize];
+  u16 vel;
 
   validateCommandstring(raw, "pmv:", &cmd);
 
@@ -93,5 +123,8 @@ void executeParallelmoviment(String raw, u8 buffsize, void run(u8, u8, u16))
   if (split.error or split.left.length() == 0 or split.rigth.length() == 0)
     return;
 
-  /* converttoDegstring(split.rigth, ',', run, split.left.toInt()); */
+  vel = split.left.toInt();
+  converttoDegstring(split.rigth, ',', degarr);
+
+  run(degarr, vel, buffsize);
 }

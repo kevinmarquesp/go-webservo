@@ -26,8 +26,7 @@ void setup(void)
   // and that loop will attach all servos and move them to the min value
   for (u8 i = 0; i < SERVO_NUM; ++i)
   {
-    Motor[i].attach(pinarr[i]);
-    Motor[i].write(minarr[i]);
+    Motor[i].config(pinarr[i], minarr[i], maxarr[i]);
   }
 }
 
@@ -39,15 +38,32 @@ void loop(void)
   String data = readfromWebapp();
 
   executeMakemoviment(data, SERVO_NUM, [](u8 pos, u8 deg, u16 _){
-      Motor[pos].write(deg);
+    Motor[pos].write(deg);
   });
 
-  executeParallelmoviment(data, SERVO_NUM, [](u8 pos, u8 deg, u16 vel){
-    Serial.print(pos);
-    Serial.print(" -> ");
-    Serial.print(deg);
-    Serial.print(" (");
-    Serial.print(vel);
-    Serial.println(")");
+  executeParallelmoviment(data, SERVO_NUM, [](u8* degarr, u16 vel, u8 buffsize){
+    String pastpos, nowpos;
+    u8 doneCounter = 0;
+
+    pastpos = getallServopos(Motor, buffsize);
+
+    while (doneCounter <= buffsize)
+    {
+      for (u8 i = 0; i < buffsize; ++i)
+      {
+        u8 deg = degarr[i];
+
+        Motor[i].move(Motor[i].is(0), deg, vel);
+
+        if (isAlldone(Motor, buffsize))
+          doneCounter++;
+      }
+    }
+
+    nowpos = getallServopos(Motor, buffsize);
+    resetallServo(Motor, buffsize);
+
+    Serial.print("done:");
+    Serial.println(String(pastpos + ">" + nowpos));
   });
 }
