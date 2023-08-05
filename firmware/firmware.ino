@@ -1,5 +1,7 @@
 #include <Servo.h>
 
+#include "src/comunication.h"
+
 #define AMOUNT 3
 
 const uint8_t pinarr[AMOUNT] = {  7,   6,   5};
@@ -31,22 +33,8 @@ void loop(void)
   if (not Serial.available())
     return;
 
-  String rawData = Serial.readStringUntil('\n');
-  String strData[AMOUNT];
-  uint8_t j = 0, s = 0;
-
-  for (uint8_t i = 0; i < rawData.length(); ++i)
-  {
-    if (rawData.charAt(i) == ' ' or i == rawData.length() - 1)
-    {
-      strData[j] = rawData.substring(s, i + 1);
-      s = i;
-      j++;
-    }
-  }
-
-  for (uint8_t i = 0; i < AMOUNT; ++i)
-  {
-    actor[i].write(strData[i].toInt());
-  }
+  String data = readfromWebapp();
+  executeMakemoviment(data, [](uint8_t pos, uint8_t val){
+    actor[pos].write(val);
+  });
 }
