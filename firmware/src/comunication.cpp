@@ -17,7 +17,35 @@ void validateCommandstring(String raw, String expected, Command* cmdbuf)
   cmdbuf->error = false;
 }
 
-void executeMakemoviment(String raw, void fnl(uint8_t pos, uint8_t val))
+void splitarrayDegstring(String data, char dlmr, void run(u8 pos, u8 val))
+{
+  data.replace(" ", "");
+  data.concat(',');
+
+  u8 j = 0, s = 0;
+
+  for (u8 i = 0; i < data.length(); ++i)
+  {
+    if (data.charAt(i) == dlmr or i == data.length() + 1)
+    {
+      String elm = data.substring(s, i);
+      i8 matchdlmr = data.indexOf(dlmr);
+
+      // remove the dlmr string if it is present on this instance
+      if (matchdlmr != -1)
+        data.remove(matchdlmr, 1);
+
+      // only execute if the element is not an empty string
+      if (elm.length() > 0)
+        run(j, elm.toInt());
+
+      s = i;
+      ++j;
+    }
+  }
+}
+
+void executeMakemoviment(String raw, void run(u8 pos, u8 val))
 {
   Command cmd;
 
@@ -26,25 +54,5 @@ void executeMakemoviment(String raw, void fnl(uint8_t pos, uint8_t val))
   if (cmd.error)
     return;
 
-  String arg = cmd.arg + ",";
-  char dlmr = ',';
-  uint8_t j = 0, s = 0;
-
-  for (uint8_t i = 0; i < arg.length(); ++i)
-  {
-    if (arg.charAt(i) == dlmr or i == arg.length() + 1)
-    {
-      String elm = arg.substring(s, i);
-      int8_t matchdlmr = elm.indexOf(dlmr);
-
-      if (matchdlmr != -1)
-        elm.remove(matchdlmr, 1);
-
-      if (elm.length() > 0)
-        fnl(j, elm.toInt());
-
-      s = i;
-      ++j;
-    }
-  }
+  splitarrayDegstring(cmd.arg, ',', run);
 }

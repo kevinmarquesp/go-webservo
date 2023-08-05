@@ -2,11 +2,13 @@
 
 #include "src/comunication.h"
 
+#define u8 uint8_t
+
 #define AMOUNT 3
 
-const uint8_t pinarr[AMOUNT] = {  7,   6,   5};
-const uint8_t minarr[AMOUNT] = {  0,  30,  10};
-const uint8_t maxarr[AMOUNT] = {180, 150,  90};
+const u8 pinarr[AMOUNT] = {  7,   6,   5};
+const u8 minarr[AMOUNT] = {  0,  30,  10};
+const u8 maxarr[AMOUNT] = {180, 150,  90};
 
 Servo actor[AMOUNT];
 
@@ -14,7 +16,7 @@ void setup(void)
 {
   String webconfig = "gws_conf:";
 
-  for (uint8_t i = 0; i < AMOUNT; ++i)
+  for (u8 i = 0; i < AMOUNT; ++i)
   {
     webconfig.concat(String(minarr[i]) + String("-"));
     webconfig.concat(i == AMOUNT - 1 ?
@@ -34,7 +36,7 @@ void loop(void)
     return;
 
   String data = readfromWebapp();
-  executeMakemoviment(data, [](uint8_t pos, uint8_t val){
+  executeMakemoviment(data, [](u8 pos, u8 val){
     actor[pos].write(val);
   });
 }
