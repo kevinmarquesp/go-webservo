@@ -1,5 +1,4 @@
-#include <Servo.h>
-
+#include "src/PreciseServo/PreciseServo.h"
 #include "src/comunication.h"
 #include "config.h"
 
@@ -7,7 +6,7 @@
 u8 pinarr[SERVO_NUM] = PIN_ARRAY;
 u8 minarr[SERVO_NUM] = MIN_ARRAY;
 u8 maxarr[SERVO_NUM] = MAX_ARRAY;
-Servo Motor[SERVO_NUM];
+AdvancedServo Motor[SERVO_NUM];
 
 void setup(void)
 {
@@ -39,12 +38,11 @@ void loop(void)
 
   String data = readfromWebapp();
 
-  executeMakemoviment(data, [](u8 pos, u8 deg, u16 vel){
-    if (pos < SERVO_NUM)
+  executeMakemoviment(data, SERVO_NUM, [](u8 pos, u8 deg, u16 _){
       Motor[pos].write(deg);
   });
 
-  executeParallelmoviment(data, [](u8 pos, u8 deg, u16 vel){
+  executeParallelmoviment(data, SERVO_NUM, [](u8 pos, u8 deg, u16 vel){
     Serial.print(pos);
     Serial.print(" -> ");
     Serial.print(deg);
