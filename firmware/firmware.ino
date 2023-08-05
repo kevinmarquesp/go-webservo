@@ -39,8 +39,17 @@ void loop(void)
 
   String data = readfromWebapp();
 
-  executeMakemoviment(data, [](u8 pos, u8 val){
+  executeMakemoviment(data, [](u8 pos, u8 deg, u16 vel){
     if (pos < SERVO_NUM)
-      Motor[pos].write(val);
+      Motor[pos].write(deg);
+  });
+
+  executeParallelmoviment(data, [](u8 pos, u8 deg, u16 vel){
+    Serial.print(pos);
+    Serial.print(" -> ");
+    Serial.print(deg);
+    Serial.print(" (");
+    Serial.print(vel);
+    Serial.println(")");
   });
 }

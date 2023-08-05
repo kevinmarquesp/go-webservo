@@ -44,6 +44,21 @@ void foreachDegstring(String data, char dlmr, void run(u8, u8, u16), u16 vel)
   }
 }
 
+void splitString(String data, char dlmr, Strsplit* buff)
+{
+  u8 matchdlmr = data.indexOf(dlmr);
+
+  if (matchdlmr == -1)
+  {
+    buff->error = true;
+    return;
+  }
+
+  buff->left = data.substring(0, matchdlmr);
+  buff->rigth = data.substring(matchdlmr + 1, data.length());
+  buff->error = false;
+}
+
 void executeMakemoviment(String raw, void run(u8, u8, u16))
 {
   Command cmd;
@@ -53,5 +68,26 @@ void executeMakemoviment(String raw, void run(u8, u8, u16))
   if (cmd.error)
     return;
 
-  splitarrayDegstring(cmd.arg, ',', run);
+  cmd.arg.replace(" ", "");
+  foreachDegstring(cmd.arg, ',', run, 0);
+}
+
+void executeParallelmoviment(String raw, void run(u8 pos, u8 deg, u16 vel))
+{
+  Command cmd;
+  Strsplit split;
+
+  validateCommandstring(raw, "pmv:", &cmd);
+
+  if (cmd.error)
+    return;
+
+  cmd.arg.replace(" ", "");
+
+  splitString(cmd.arg, '/', &split);
+
+  if (split.error or split.left.length() == 0 or split.rigth.length() == 0)
+    return;
+
+  foreachDegstring(split.rigth, ',', run, split.left.toInt());
 }
