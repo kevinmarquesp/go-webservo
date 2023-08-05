@@ -19,7 +19,7 @@ typedef struct Strsplit
 } Strsplit;
 
 String readfromWebapp(void);
-void foreachDegstring(String data, char dlmr, void run(u8, u8, u16), u16 vel);
+void convertDegstring(String data, char dlmr, u8* buffarr);
 void splitString(String data, char dlmr, Strsplit* buff);
 void validateCommandstring(String raw, String expected, Command* buff);
 

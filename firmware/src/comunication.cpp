@@ -20,7 +20,7 @@ void validateCommandstring(String raw, String expected, Command* cmdbuf)
   cmdbuf->error = false;
 }
 
-void foreachDegstring(String data, char dlmr, void run(u8, u8, u16), u16 vel)
+void converttoDegstring(String data, char dlmr, u8* degarr)
 {
   data.concat(',');
 
@@ -39,7 +39,7 @@ void foreachDegstring(String data, char dlmr, void run(u8, u8, u16), u16 vel)
 
       // only execute if the element is not an empty string
       if (elm.length() > 0)
-        run(j, elm.toInt(), vel);
+        degarr[j] = elm.toInt();
 
       s = i;
       ++j;
@@ -65,13 +65,17 @@ void splitString(String data, char dlmr, Strsplit* buff)
 void executeMakemoviment(String raw, u8 buffsize, void run(u8, u8, u16))
 {
   Command cmd;
+  u8 degarr[buffsize];
 
   validateCommandstring(raw, "mv:", &cmd);
 
   if (cmd.error)
     return;
 
-  foreachDegstring(cmd.arg, ',', run, 0);
+  converttoDegstring(cmd.arg, ',', arr);
+
+  for (u8 i = 0; i < buffsize; ++i)
+    run(i, degarr[i], 0);
 }
 
 void executeParallelmoviment(String raw, u8 buffsize, void run(u8, u8, u16))
@@ -89,5 +93,5 @@ void executeParallelmoviment(String raw, u8 buffsize, void run(u8, u8, u16))
   if (split.error or split.left.length() == 0 or split.rigth.length() == 0)
     return;
 
-  foreachDegstring(split.rigth, ',', run, split.left.toInt());
+  /* converttoDegstring(split.rigth, ',', run, split.left.toInt()); */
 }
