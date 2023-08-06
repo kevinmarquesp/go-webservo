@@ -1,6 +1,7 @@
 #include "src/lib/PreciseServo/PreciseServo.h"
 
 #include "src/helpers/serial/serial.h"
+#include "src/helpers/commands/commands.h"
 #include "src/helpers/routines/routines.h"
 
 #include "src/header/user_config.h"
