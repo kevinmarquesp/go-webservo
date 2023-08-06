@@ -14,6 +14,20 @@ void validateCommandstring(String raw, String expected, Command* cmdbuf)
   cmdbuf->error = false;
 }
 
+void sendConfigdata(u8 servonum, u8* mirarr, u8* maxarr)
+{
+  String confstr = "gws_conf:";
+
+  for (u8 i = 0; i < SERVO_NUM; ++i)
+  {
+    confstr.concat(String(minarr[i]) + "-");
+
+    confstr.concat(i == SERVO_NUM - 1 ?
+      String(maxarr[i]) : String(maxarr[i]) + ",");
+  }
+
+  Serial.println(confstr);
+}
 
 String readfromWebapp(void)
 {

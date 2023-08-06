@@ -10,6 +10,8 @@ typedef struct Command
 } Command;
 
 String readfromWebapp(void);
+void sendConfigdata(u8 servonum, u8* mirarr, u8* maxarr);
+
 void validateCommandstring(String raw, String expected, Command* buff);
 
 void executeMakemoviment(String raw, u8 buffsize, void run(u8, u8, u16));
