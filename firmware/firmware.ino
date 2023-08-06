@@ -1,6 +1,9 @@
-#include "src/PreciseServo/PreciseServo.h"
-#include "src/comunication.h"
-#include "config.h"
+#include "src/lib/PreciseServo/PreciseServo.h"
+
+#include "src/helpers/serial/serial.h"
+#include "src/helpers/servo/servo.h"
+
+#include "src/header/user_config.h"
 
 // setting up the global values that handle the servo objects
 u8 pinarr[SERVO_NUM] = PIN_ARRAY;
