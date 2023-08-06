@@ -1,10 +1,12 @@
 #pragma once
 
+#include <Arduino.h>
+
 #define f32 float  // uses 32 bits (4 bytes) of memory
 #define f64 double // uses 64 bits (8 bytes) of memory
 
-#define u8  uint8_t  // byte or an unsigned char
 #define i8  int8_t   // char
+#define u8  uint8_t  // byte or an unsigned char
 #define i16 int16_t  // short
 #define u16 uint16_t // unsigned short
 #define i32 int32_t  // int
