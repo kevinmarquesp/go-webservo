@@ -3,7 +3,7 @@
 #include "../../lib/PreciseServo/PreciseServo.h"
 #include "../servo/servo.h"
 
-extern AdvancedServo* Motor;
+extern AdvancedServo Motor[];
 
 void livemovimentRoutine(u8 pos, u8 deg, u16 vel)
 {
