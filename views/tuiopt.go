@@ -6,9 +6,9 @@ import (
 
 var tuitmpl *promptui.SelectTemplates = &promptui.SelectTemplates{
     Label:    "{{ . }}",
-    Active:   "{{ \"*>\" | green }} {{ . | underline }}",
+    Active:   "{{ \"*>\" | blue }} {{ . | cyan }}",
     Inactive: "   {{ . | white }}",
-    Selected: "{{ \"[selected]\" | black }} {{ . | black }}",
+    Selected: "\033[35m * <selected> {{ . }}\033[m",
 }
 
 // Simple abstraction to allow the user to select an option in an array of
