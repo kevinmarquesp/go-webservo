@@ -3,6 +3,7 @@ package controlers
 import (
 	"errors"
 	"go-webservo/arduino"
+	"go-webservo/views"
 	"regexp"
 	"strconv"
 	"strings"
@@ -13,6 +14,7 @@ func validateCommandstring(raw, expected string) error {
         return errors.New("Command specified is not valid: " + raw)
     }
 
+    views.Logger.Infof("Ready to execute the `%s` routine", expected)
     return nil
 }
 
@@ -50,5 +52,6 @@ func ExeccmdSaveservoinfo(raw string) error {
         })
     }
 
+    views.Logger.Infof("Servo information struct constructed with %d elements!", len(sinfoarr))
     return nil
 }

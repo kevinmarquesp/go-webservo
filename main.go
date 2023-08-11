@@ -1,13 +1,34 @@
 package main
 
 import (
+	"fmt"
 	"go-webservo/arduino"
 	"go-webservo/controlers"
 	"go-webservo/views"
+	"net/http"
 	"os"
 	"time"
-	"fmt"
 )
+
+func try(cond bool, err interface{}) {
+    if cond {
+        views.Logger.Fatal(err)
+        os.Exit(1)
+    }
+}
+
+func startServer() {
+    views.Logger.Warn("Setting up the local server...")
+
+    http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./www/static/"))))
+
+    http.HandleFunc("/", controlers.RenderHomepage)
+    http.HandleFunc("/send", controlers.SenddataLiveservo)
+
+    views.Logger.Warn("Server configured and running on http://localhost:8080/")
+    err := http.ListenAndServe(":8080", nil)
+    try(err != nil, err)
+}
 
 func main() {
 	fmt.Println("\033[35m *")
@@ -39,11 +60,7 @@ func main() {
 
     err = controlers.ExeccmdSaveservoinfo(out)
     try(err != nil, err)
-}
+	fmt.Println("\033[35m *\n *\033[m")
 
-func try(cond bool, err interface{}) {
-    if cond {
-        views.Logger.Fatal(err)
-        os.Exit(1)
-    }
+    startServer()
 }

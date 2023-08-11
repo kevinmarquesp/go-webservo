@@ -8,7 +8,7 @@ import (
 	"go.bug.st/serial"
 )
 
-var arduino serial.Port
+var board serial.Port
 
 // When the connection is stablished the main code (inside controllers, models
 // and views) should only access the `arduino` connection calling some
@@ -36,7 +36,7 @@ func StablishConnection() error {
         }
     }
 
-    arduino, err = serial.Open(port, &serial.Mode{})
+    board, err = serial.Open(port, &serial.Mode{})
     if err != nil {
         return err
     }
@@ -55,7 +55,7 @@ func GetSerialoutput() (string, error) {
 
     // this loop is needed on windows machine
     for {
-        size, err := arduino.Read(buff)
+        size, err := board.Read(buff)
         if err != nil {
             return "", err
         }
@@ -69,5 +69,19 @@ func GetSerialoutput() (string, error) {
         }
     }
 
+    views.Logger.Infof("String received from the serial port: %s", result)
     return result, nil
+}
+
+// This command also is useful to throw away that `datalen` variable
+func SendserialBytearray(msg []byte) error {
+    msgln := append(msg, []byte("\n")...)
+
+    datalen, err := board.Write(msgln)
+    if err != nil {
+        return err
+    }
+
+    views.Logger.Infof("Sended %d bytes to the board: %s", datalen, string(msg))
+    return nil
 }

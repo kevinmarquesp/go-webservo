@@ -8,8 +8,8 @@
     <title>go-webservo</title>
 
     <!-- <link rel="shortcut icon" type="image/x-icon" href="assets/icons/favicon.ico"> -->
-    <link rel="stylesheet" href="/static/css/main.css" media="all">
-    <script defer type="module" src="/static/js/index.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="static/css/main.css" media="all">
+    <script defer type="module" src="static/js/index.js" charset="utf-8"></script>
 
   </head>
   <body>
@@ -28,21 +28,21 @@
             corretamente para se comunicar com essa aplicação web.
           </p>
           <form class="servo-input">
-            {{range .}}
+            {{ range . }}
               <div class="si-range-box">
                 <span data-js-range-display class="si-value-display">
-                  {{.Min}}
+                  {{ .Mindeg }}
                 </span>
                 <input
                   data-js-range-servo-input
                   class="si-range-input"
                   type="range"
-                  value="{{.Min}}"
-                  min="{{.Min}}"
-                  max="{{.Max}}"
+                  value="{{ .Mindeg }}"
+                  min="{{ .Mindeg }}"
+                  max="{{ .Maxdeg }}"
                 />
               </div>
-            {{end}}
+            {{ end }}
           </form>
 
         </div>
