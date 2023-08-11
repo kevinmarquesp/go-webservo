@@ -9,6 +9,10 @@
     gap: 1rem;
 }
 
+.servo-input .si-id {
+    color: var(--clr-base-fg-alt);
+}
+
 .servo-input .si-range-box .si-value-display {
     width: 2rem;
     text-align: center;

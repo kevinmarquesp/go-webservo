@@ -27,22 +27,25 @@
             servo motores, verifique se o <em>sketch</em> foi configurado
             corretamente para se comunicar com essa aplicação web.
           </p>
-          <form class="servo-input">
-            {{ range . }}
+          <form class="servo-input" action="">
+            {{range .}}
               <div class="si-range-box">
+                <span class="si-id">
+                  [{{.Id}}]
+                </span>
                 <span data-js-range-display class="si-value-display">
-                  {{ .Mindeg }}
+                  {{.Mindeg}}
                 </span>
                 <input
                   data-js-range-servo-input
                   class="si-range-input"
                   type="range"
-                  value="{{ .Mindeg }}"
-                  min="{{ .Mindeg }}"
-                  max="{{ .Maxdeg }}"
+                  value="{{.Mindeg}}"
+                  min="{{.Mindeg}}"
+                  max="{{.Maxdeg}}"
                 />
               </div>
-            {{ end }}
+            {{end}}
           </form>
 
         </div>
