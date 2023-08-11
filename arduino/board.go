@@ -60,7 +60,8 @@ func GetSerialoutput() (string, error) {
             return "", err
         }
 
-        result += string (buff[:size])
+        result += string(buff[:size])
+        views.Logger.Debug(result)
 
         // break this loop if there is '\n' character on that output
         if strings.Contains(string(buff[:size]), "\n") {
@@ -68,5 +69,5 @@ func GetSerialoutput() (string, error) {
         }
     }
 
-    return "", nil
+    return result, nil
 }

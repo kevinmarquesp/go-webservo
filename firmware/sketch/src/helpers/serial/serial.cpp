@@ -2,7 +2,7 @@
 
 void sendConfigdata(u8 servonum, u8* minarr, u8* maxarr)
 {
-  String confstr = "gws_conf:";
+  String confstr = "conf:";
 
   for (u8 i = 0; i < servonum; ++i)
   {
