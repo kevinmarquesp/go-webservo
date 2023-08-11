@@ -30,7 +30,7 @@ func ExeccmdSaveservoinfo(raw string) error {
     re := regexp.MustCompile(`\d+-\d+`)
     sinfoarr := re.FindAll([]byte(raw), -1)
 
-    for _, sinfo := range sinfoarr {
+    for key, sinfo := range sinfoarr {
         re = regexp.MustCompile(`\d+`)
         match := re.FindAll(sinfo, -1)
 
@@ -48,6 +48,7 @@ func ExeccmdSaveservoinfo(raw string) error {
             Mindeg: mindeg,
             Maxdeg: maxdeg,
             Position: mindeg,
+            Id: key,
             IsAttached: true,
         })
     }

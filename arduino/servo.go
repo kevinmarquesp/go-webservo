@@ -7,6 +7,7 @@ type Servoinfo struct {
     Mindeg     int
     Maxdeg     int
     Position   int
+    Id         int
     IsAttached bool
 }
 
