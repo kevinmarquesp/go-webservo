@@ -20,7 +20,7 @@ func validateCommandstring(raw, expected string) error {
 // max values, and stores that information to the arduino.AllServoinfo global
 // struct to be used by the frontend.
 func ExeccmdSaveservoinfo(raw string) error {
-    err := validateCommandstring(raw, "con:")
+    err := validateCommandstring(raw, "conf:")
     if err != nil {
         return err
     }

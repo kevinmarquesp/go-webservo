@@ -6,7 +6,6 @@ import (
 	"go-webservo/views"
 	"os"
 	"time"
-
 	"fmt"
 )
 
@@ -25,30 +24,25 @@ func main() {
 	fmt.Println("\033[35m *\n *\033[m")
 
     err := arduino.StablishConnection()
-    if err != nil {
-        views.Logger.Fatal(err)
-        os.Exit(1)
-    }
+    try(err != nil, err)
 	fmt.Println("\033[35m *\n *\033[m")
 
     timeout := true
     go (func() {
         time.Sleep(10 * time.Second)
-        if timeout {
-            views.Logger.Fatal("Timeout has been exceeded! Check the Arduino source code")
-            os.Exit(1)
-        }
+        try(timeout, "Timeout has been exceeded! Check the Arduino source code")
     })()
 
     out, err := arduino.GetSerialoutput()
-    if err != nil {
-        views.Logger.Fatal(err)
-        os.Exit(1)
-    }
+    try(err != nil, err)
     timeout = false
 
     err = controlers.ExeccmdSaveservoinfo(out)
-    if err != nil {
+    try(err != nil, err)
+}
+
+func try(cond bool, err interface{}) {
+    if cond {
         views.Logger.Fatal(err)
         os.Exit(1)
     }
