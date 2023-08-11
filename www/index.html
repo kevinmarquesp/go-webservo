@@ -44,6 +44,19 @@
                   min="{{.Mindeg}}"
                   max="{{.Maxdeg}}"
                 />
+                <button
+                  data-js-toggle-btn-servo-attach
+                  class="si-toggle-attach-btn {{if not .IsAttached}}
+                    js-detached
+                  {{end}}"
+                  type="button"
+                >
+                  {{if .IsAttached}}
+                    Detach
+                  {{else}}
+                    Attach
+                  {{end}}
+                </button>
               </div>
             {{end}}
           </form>

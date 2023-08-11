@@ -1,4 +1,5 @@
-import { info, error, warn } from './utils/log.js'
+import Toggle from './components/Toggle.js'
+import { info, error } from './utils/log.js'
 import { sendData } from './arduino/send.js'
 import { formatMovedata } from './arduino/format.js'
 
@@ -9,6 +10,7 @@ import { formatMovedata } from './arduino/format.js'
 
 const $displayArr = document.querySelectorAll('[data-js-range-display]')
 const $rangeArr = document.querySelectorAll('[data-js-range-servo-input]')
+const $toggleAttachBtnArr = document.querySelectorAll('[data-js-toggle-btn-servo-attach]')
 
 const url = "/send"
 const xhr = new XMLHttpRequest()
@@ -39,5 +41,28 @@ $rangeArr.forEach(($s, key) => {
         $d.innerText = $s.value
 
         sendData(xhr, url, formatMovedata($rangeArr))
+    }
+})
+
+$toggleAttachBtnArr.forEach($button => {
+    const toggle = new Toggle($button)
+    toggle.state = true
+
+    toggle
+        .setOnToggle($elm => {
+            info('Changing the style and state of the toggle button pressed')
+            $elm.classList.toggle('js-dettached')
+        })
+        .setOnEnable($elm => {
+            info('Enabled: servo will be marked as attached')
+            $elm.innerText = 'Detach'
+        })
+        .setOnDisable($elm => {
+            info('Disabled: servo will be marked as detached')
+            $elm.innerText = 'Attach'
+        })
+
+    $button.onclick = () => {
+        toggle.toggle()
     }
 })

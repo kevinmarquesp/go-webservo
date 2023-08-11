@@ -14,7 +14,7 @@
 }
 
 .servo-input .si-range-box .si-value-display {
-    width: 2rem;
+    width: 3rem;
     text-align: center;
     font-weight: bolder;
 }
@@ -22,4 +22,20 @@
 .servo-input .si-range-box .si-range-input {
     accent-color: var(--clr-base-fg-alt);
     width: 100%;
+}
+
+.servo-input .si-toggle-attach-btn {
+    padding: .2rem .4rem;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    width: 8rem;
+
+    color: var(--clr-base-fg-alt);
+    border: 1px solid var(--clr-base-fg-alt);
+}
+
+.servo-input .si-toggle-attach-btn:hover,
+.servo-input .si-toggle-attach-btn.js-dettached {
+    color: var(--clr-base-fg);
+    background-color: var(--clr-base-fg-alt);
 }
