@@ -1,28 +1,57 @@
-@import "./base/reset.css";
-@import "./base/colors.css";
-@import "./base/variables.css";
-@import "./components/card.css";
-@import "./components/servo-input.css";
-
 :root {
-    background-color: var(--clr-base-bg);
-    color: var(--clr-base-fg);
-    font-family: sans-serif;
+    --bs-body-bg: #000;
+    --bs-body-bg-rgb: 0,0,0;
+
+    --bs-primary: #f00;
+    --bs-primary-rgb: 255,0,0;
+    --bs-primary-bg-subtle: rgba(255 0 0 / .075);
+    --bs-primary-text-emphasis: #f00;
+
+    --bs-border-color: var(--bs-primary);
 }
 
-body {
-    width: 100vw;
-    height: 100vh;
-
-    display: grid;
-    place-items: center;
+input {
+    accent-color: var(--bs-primary);
 }
 
-#app {
-    width: min(var(--bp-sm), 100%);
-    padding: 2rem;
+/* fixing the accordion component
+ * ------------------------------ */
 
-    display: flex;
-    flex-direction: column;
-    gap: 3rem;
+.accordion-button:focus {
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+.accordion-button::after {
+    background-image: none !important;
+}
+
+/* fixing the button colors
+ * ------------------------ */
+
+.btn-primary {
+    --bs-btn-bg: var(--bs-primary);
+    --bs-btn-border-color: var(--bs-primary);
+    --bs-btn-focus-shadow-rgb: rgba(var(--bs-primary-rgb), .8);
+
+    --bs-btn-hover-bg: rgba(var(--bs-primary-rgb), .37);
+    /* --bs-btn-hover-color: var(--bs-primary); */
+    --bs-btn-hover-border-color: var(--bs-primary);
+
+    --bs-btn-active-bg: rgba(var(--bs-primary-rgb), .57);
+    --bs-btn-active-color: var(--bs-primary);
+    --bs-btn-active-border-color: var(--bs-primary);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--bs-primary);
+    --bs-btn-border-color: var(--bs-primary);
+    --bs-btn-focus-shadow-rgb: rgba(var(--bs-primary-rgb), .8);
+
+    --bs-btn-hover-bg: rgba(var(--bs-primary-rgb), .37);
+    --bs-btn-hover-color: var(--bs-primary);
+    --bs-btn-hover-border-color: var(--bs-primary);
+
+    --bs-btn-active-bg: rgba(var(--bs-primary-rgb), .57);
+    --bs-btn-active-color: var(--bs-primary);
+    --bs-btn-active-border-color: var(--bs-primary);
 }

@@ -52,21 +52,25 @@ $toggleAttachBtnArr.forEach(($button, key) => {
     toggle.state = true
 
     toggle
-        .setOnToggle($elm => {
+        .setOnToggle(() => {
             info('Changing the style and state of the toggle button pressed')
-            $elm.classList.toggle('js-dettached')
+            $rangeArr[key].toggleAttribute('disabled')
         })
         .setOnEnable($elm => {
             warn('Enabled: servo will be marked as attached')
             sendData(xhr, sendurl, `a:${key}`)
 
             $elm.innerText = 'Detach'
+            $elm.classList.add('btn-outline-primary')
+            $elm.classList.remove('btn-primary')
         })
         .setOnDisable($elm => {
             warn('Disabled: servo will be marked as detached')
             sendData(xhr, sendurl, `d:${key}`)
 
             $elm.innerText = 'Attach'
+            $elm.classList.remove('btn-outline-primary')
+            $elm.classList.add('btn-primary')
         })
 
     $button.onclick = () => toggle.toggle()
