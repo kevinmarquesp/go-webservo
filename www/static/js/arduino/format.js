@@ -1,10 +1,3 @@
-export function formatMovedata($rangeArr) {
-    let buff = 'mv:'
-
-    $rangeArr.forEach(($s, key) => {
-        buff += key === $rangeArr.length - 1 ?
-            `${$s.value}` : `${$s.value},`
-    })
-
-    return buff
-}
+export const buildcmdMove = (arr) => `mv:${arr.join(',')}`
+export const buildcmdAttach = (pin) => `a:${pin}`
+export const buildcmdDetach = (pin) => `d:${pin}`
