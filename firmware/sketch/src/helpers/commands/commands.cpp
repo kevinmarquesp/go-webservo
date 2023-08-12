@@ -52,3 +52,31 @@ void executeParallelmoviment(String raw, u8 buffsize, void run(u8*, u16, u8))
 
   run(degarr, vel, buffsize);
 }
+
+void executeDetach(String raw, void run(u8))
+{
+  Command cmd;
+  u8 value;
+
+  validateCommandstring(raw, "d:", &cmd);
+
+  if (cmd.error)
+    return;
+
+  value = cmd.arg.toInt();
+  run(value < 0 ? 0 : value);
+}
+
+void executeAttach(String raw, void run(u8))
+{
+  Command cmd;
+  u8 value;
+
+  validateCommandstring(raw, "a:", &cmd);
+
+  if (cmd.error)
+    return;
+
+  value = cmd.arg.toInt();
+  run(value < 0 ? 0 : value);
+}

@@ -29,5 +29,15 @@ void loop(void)
 
     executeMakemoviment(input, SERVO_NUM, &livemovimentRoutine);
     executeParallelmoviment(input, SERVO_NUM, &parallelmovimentRoutine);
+
+    executeDetach(input, [](u8 pos){
+      if (pos < SERVO_NUM)
+        Motor[pos].detach();
+    });
+
+    executeAttach(input, [](u8 pos){
+      if (pos < SERVO_NUM)
+        Motor[pos].attach(pinarr[pos]);
+    });
   }
 }
