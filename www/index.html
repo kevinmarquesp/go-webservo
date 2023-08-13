@@ -12,50 +12,97 @@
 
     <link rel="stylesheet" href="static/css/vendor/bootstrap.min.css" media="all">
     <script type="module" src="static/js/vendor/bootstrap.min.js" charset="utf-8"></script>
+    <script type="module" src="static/js/vendor/bootstrap.bundle.min.js" charset="utf-8"></script>
 
     <script defer type="module" src="static/js/index.js" charset="utf-8"></script>
     <link rel="stylesheet" href="static/css/main.css" media="all">
 
   </head>
   <body>
-    <div id="app" class="d-flex flex-column align-items-center p-5">
+    <div id="app" class="d-flex flex-column align-items-center p-2 pt-5 pb-5">
 
       <div style="max-width: 576px" id="accordionCards" class="accordion w-100 border border-primary rounded">
-
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#liveControlPane" aria-expanded="true" aria-controls="liveControlPane">
               Painel de controle principal
             </button>
           </h2>
-        </div>
-        <div id="liveControlPane" class="accordion-collapse collapse show" data-bs-parent="#accordionCards">
-          <section class="accordion-body">
-            <main id="liveControlInput">
-              <div class="d-flex flex-column gap-2">
-                {{range .}}
-                <div class="d-flex align-items-center gap-2">
-                  <span class="badge rounded-pil bg-dark">
-                    {{.Id}}
-                  </span>
-                  <span data-js-range-display style="width: 3.45rem" class="badge bg-primary">
-                    {{.Position}}
-                  </span>
-                  <input data-js-range-servo-input
-                    type="range" {{if not .IsAttached}} disabled {{end}}
-                    value="{{.Position}}" min="{{.Mindeg}}" max="{{.Maxdeg}}"
-                    class="w-100"
-                  />
-                  <button data-js-toggle-btn-servo-attach type="button" class="w-25 btn btn-sm {{if not .IsAttached}} btn-primary {{else}} btn-outline-primary {{end}}">
-                    {{if .IsAttached}} Detach {{else}} Attach {{end}}
-                  </button>
+          <div id="liveControlPane" class="accordion-collapse collapse show" data-bs-parent="#accordionCards">
+            <section class="accordion-body">
+              <main id="liveControlInput">
+                <div class="d-flex flex-column gap-2">
+                  {{range .}}
+                    <div class="d-flex align-items-center gap-2">
+                      <span class="badge rounded-pil bg-dark">
+                        {{.Id}}
+                      </span>
+                      <span data-js-range-display style="width: 3.45rem" class="badge bg-primary">
+                        {{.Position}}
+                      </span>
+                      <input data-js-range-servo-input
+                        type="range" {{if not .IsAttached}} disabled {{end}}
+                        value="{{.Position}}" min="{{.Mindeg}}" max="{{.Maxdeg}}"
+                        class="w-100"
+                      />
+                      <button data-js-toggle-btn-servo-attach type="button" class="w-25 btn btn-sm {{if not .IsAttached}} btn-primary {{else}} btn-outline-primary {{end}}">
+                        {{if .IsAttached}} Detach {{else}} Attach {{end}}
+                      </button>
+                    </div>
+                  {{end}}
+                  <div class="d-flex gap-2">
+                    <div class="input-group w-50">
+                      <span class="input-group-text bg-transparent text-primary">
+                        Vel.
+                      </span>
+                      <input type="number" value="20" class="form-control text-center"/>
+                    </div>
+                    <button type="button" class="btn btn-primary w-50">
+                      Registrar
+                    </button>
+                  </div>
                 </div>
-                {{end}}
-              </div>
-            </main>
-          </section>
+              </main>
+            </section>
+          </div>
         </div>
 
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#savedScenesPane" aria-expanded="false" aria-controls="savedScenesPane">
+              Cenas salvas
+            </button>
+          </h2>
+          <div id="savedScenesPane" class="accordion-collapse collapse" data-bs-parent="#accordionCards">
+            <section class="accordion-body">
+              <div id="savedScenes">
+
+                <ul class="list-group">
+
+                  <!-- componente que o javascript vai usar para construir a lista de cenas -->
+                  <li class="list-group-item d-flex justify-content-between p-2">
+                    <span style="font-family: monospace" class="text-bold text-center p-2">
+                      <strong>20/180,180,180,180,180,180</strong>
+                    </span>
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Opções
+                      </button>
+                      <ul class="dropdown-menu">
+                        <li><button type="button" class="dropdown-item">Testar</button></li>
+                        <li><button type="button" class="dropdown-item">Remover</button></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><button type="button" class="dropdown-item">Atualizar</button></li>
+                      </ul>
+                    </div>
+                  </li>
+
+                </ul>
+
+              </div>
+            </section>
+          </div>
+        </div>
       </div>
 
     </div>

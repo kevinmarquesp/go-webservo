@@ -14,6 +14,10 @@ input {
     accent-color: var(--bs-primary);
 }
 
+input:focus {
+  background: red;
+}
+
 /* fixing the accordion component
  * ------------------------------ */
 
