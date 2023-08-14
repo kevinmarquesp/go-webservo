@@ -1,77 +1,47 @@
-import Toggle from './components/Toggle.js'
+import Arduino from "./model/Arduino.js";
+import LiveControlEvents from "./view/LiveControlEvents.js";
+import LiveControl from "./controller/LiveControl.js";
 
-import { buildcmdMove, buildcmdAttach,buildcmdDetach } from './arduino/format.js'
-import { sendData } from './arduino/send.js'
-import { info, warn, error } from './utils/log.js'
-
-
-/**
- * Constants and config variables
- * ------------------------------ */
-
-const $displayArr = document.querySelectorAll('[data-js-range-display]')
-const $rangeArr = document.querySelectorAll('[data-js-range-servo-input]')
-const $toggleAttachBtnArr = document.querySelectorAll('[data-js-toggle-btn-servo-attach]')
-
-const sendurl = "/send"
-const xhr = new XMLHttpRequest()
-
-
-/**
- * Inform the developer if something went wrong
- * -------------------------------------------- */
-
-info(`Address to send data: ${sendurl}`)
-
-if (!$displayArr.length)
-    error('The display array is not defined properly...')
-
-if (!$rangeArr.length)
-    error('Could not find any rang input elements...')
-
-
-/** Actual important code
- * ---------------------- */
-
-sendData(xhr, sendurl, buildcmdMove(Array.from($rangeArr)
-    .map($elm => $elm.value)))
-
-$rangeArr.forEach(($s, key) => {
-    const $d = $displayArr[key]
-
-    $s.oninput = () => {
-        $d.innerText = $s.value
-
-        sendData(xhr, sendurl, buildcmdMove(Array.from($rangeArr)
-            .map($elm => $elm.value)))
+const Config = {
+    Selectors: {
+        SLIDERS: "[data-js-range-servo-input]",
+        DEG_DISPLAYS: "[data-js-range-display]",
+        TOGGLE_ATTACH_BUTTONS: "[data-js-toggle-btn-servo-attach]",
     }
-})
+};
 
-$toggleAttachBtnArr.forEach(($button, key) => {
-    const toggle = new Toggle($button)
-    toggle.state = true
+const arduinoServerConnection = new Arduino({
+    Xhr: new XMLHttpRequest(),
+    Routes: {
+        send: "/send",
+    },
+});
 
-    toggle
-        .setOnToggle(() => {
-            info('Changing the style and state of the toggle button pressed')
-            $rangeArr[key].toggleAttribute('disabled')
-        })
-        .setOnEnable($elm => {
-            warn('Enabled: servo will be marked as attached')
-            sendData(xhr, sendurl, `a:${key}`)
+const liveControlEvents = new LiveControlEvents({
+    Selectors: {
+        sliders: Config.Selectors.SLIDERS,
+        degDisplays: Config.Selectors.DEG_DISPLAYS,
+        toggleButtons: Config.Selectors.TOGGLE_ATTACH_BUTTONS,
+    },
+    ToggleButtonStyles: {
+        Enabled: ["btn-outline-primary"],
+        Disabled: ["btn-primary"],
+    },
+    ToggleButtonText: {
+        Enabled: "Detach",
+        Disabled: "Attach",
+    },
+});
 
-            $elm.innerText = 'Detach'
-            $elm.classList.add('btn-outline-primary')
-            $elm.classList.remove('btn-primary')
-        })
-        .setOnDisable($elm => {
-            warn('Disabled: servo will be marked as detached')
-            sendData(xhr, sendurl, `d:${key}`)
+const liveControl = new LiveControl({
+    ArduinoServerConnection: arduinoServerConnection,
+    React: {
+        View: liveControlEvents,
+    },
+    Selectors: {
+        sliders: Config.Selectors.SLIDERS,
+        toggleButtons: Config.Selectors.TOGGLE_ATTACH_BUTTONS,
+    },
+});
 
-            $elm.innerText = 'Attach'
-            $elm.classList.remove('btn-outline-primary')
-            $elm.classList.add('btn-primary')
-        })
-
-    $button.onclick = () => toggle.toggle()
-})
+liveControl.start();
