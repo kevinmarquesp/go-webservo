@@ -1,12 +1,14 @@
 import Arduino from "./model/Arduino.js";
 import LiveControlEvents from "./view/LiveControlEvents.js";
 import LiveControl from "./controller/LiveControl.js";
+import Dragula from "./view/Dragula.js";
 
 const Config = {
     Selectors: {
         SLIDERS: "[data-js-range-servo-input]",
         DEG_DISPLAYS: "[data-js-range-display]",
         TOGGLE_ATTACH_BUTTONS: "[data-js-toggle-btn-servo-attach]",
+        SCENES_DRAGGABLE_CONTAINER: "#scenesDraggableContainer",
     }
 };
 
@@ -44,4 +46,13 @@ const liveControl = new LiveControl({
     },
 });
 
+const dragulaSetup = new Dragula({
+    Selectors: {
+        Draggable: [
+            Config.Selectors.SCENES_DRAGGABLE_CONTAINER,
+        ],
+    },
+});
+
 liveControl.start();
+dragulaSetup.setup();
