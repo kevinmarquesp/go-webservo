@@ -38,10 +38,9 @@ const liveControlEvents = new LiveControlEvents({
     },
 });
 
-// todo: move the arduino connection object to be inside the React attribute
 const liveControl = new LiveControl({
-    ArduinoServerConnection: arduinoServerConnection,
     React: {
+        Arduino: arduinoServerConnection,
         View: liveControlEvents,
     },
     Selectors: {

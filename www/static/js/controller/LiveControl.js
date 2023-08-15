@@ -3,11 +3,9 @@ import Arduino from "../model/Arduino.js";
 export default class LiveControl {
     #$Sliders;
     #$ToggleButtons;
-    #Arduino;
     #React;
 
     constructor(Props) {
-        this.#Arduino = Props.ArduinoServerConnection;
         this.#React = Props.React;
 
         this.#$Sliders = document.querySelectorAll(Props.Selectors.sliders);
@@ -26,7 +24,7 @@ export default class LiveControl {
     }
 
     #sendCurrentData() {
-        this.#Arduino.send(Arduino.buildcmdMove(this.getValues()));
+        this.#React.Arduino.send(Arduino.buildcmdMove(this.getValues()));
     }
 
     #setupSlidersEventlistener() {
@@ -42,9 +40,9 @@ export default class LiveControl {
         this.#$ToggleButtons.forEach(($button, key) => {
             $button.addEventListener("click", () => {
                 if ($button.dataset.toggleState === "enabled")
-                    this.#Arduino.send(Arduino.buildcmdAttachPin(key));
+                    this.#React.Arduino.send(Arduino.buildcmdAttachPin(key));
                 else
-                    this.#Arduino.send(Arduino.buildcmdDetachPin(key));
+                    this.#React.Arduino.send(Arduino.buildcmdDetachPin(key));
             });
         });
     }
