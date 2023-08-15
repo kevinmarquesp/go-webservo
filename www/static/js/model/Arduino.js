@@ -23,4 +23,8 @@ export default class Arduino {
     static buildcmdDetachPin(pin) {
         return `d:${pin}`;
     }
+
+    static buildcmdParallelMovement(vel, degarr) {
+        return `pmv:${vel}/${degarr.join(",")}`;
+    }
 }

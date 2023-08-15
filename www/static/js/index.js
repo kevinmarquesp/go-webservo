@@ -2,12 +2,15 @@ import Arduino from "./model/Arduino.js";
 import LiveControlEvents from "./view/LiveControlEvents.js";
 import LiveControl from "./controller/LiveControl.js";
 import Dragula from "./view/Dragula.js";
+import SavedScenes from "./controller/SavedScenes.js";
 
 const Config = {
     Selectors: {
         SLIDERS: "[data-js-range-servo-input]",
         DEG_DISPLAYS: "[data-js-range-display]",
         TOGGLE_ATTACH_BUTTONS: "[data-js-toggle-btn-servo-attach]",
+        SPEED_INPUT: "[data-js-speed-input]",
+        REGISTER_POSITION_BUTTON: "[data-js-register-position]",
         SCENES_DRAGGABLE_CONTAINER: "#scenesDraggableContainer",
     }
 };
@@ -35,6 +38,7 @@ const liveControlEvents = new LiveControlEvents({
     },
 });
 
+// todo: move the arduino connection object to be inside the React attribute
 const liveControl = new LiveControl({
     ArduinoServerConnection: arduinoServerConnection,
     React: {
@@ -46,6 +50,16 @@ const liveControl = new LiveControl({
     },
 });
 
+const savedScenes = new SavedScenes({
+    React: {
+        LiveControl: liveControl,
+    },
+    Selectors: {
+        speedInput: Config.Selectors.SPEED_INPUT,
+        registerButton: Config.Selectors.REGISTER_POSITION_BUTTON,
+    }
+});
+
 const dragulaSetup = new Dragula({
     Selectors: {
         Draggable: [
@@ -55,4 +69,5 @@ const dragulaSetup = new Dragula({
 });
 
 liveControl.start();
+savedScenes.start();
 dragulaSetup.setup();

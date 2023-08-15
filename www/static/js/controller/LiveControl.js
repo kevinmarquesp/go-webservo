@@ -21,16 +21,18 @@ export default class LiveControl {
         this.#setupToggleButtonsEventlistener();
     }
 
+    getValues() {
+        return Array.from(this.#$Sliders).map($slider => Number($slider.value));
+    }
+
     #sendCurrentData() {
-        this.#Arduino.send(Arduino.buildcmdMove(Array.from(this.#$Sliders)
-            .map($slider => $slider.value)));
+        this.#Arduino.send(Arduino.buildcmdMove(this.getValues()));
     }
 
     #setupSlidersEventlistener() {
         this.#$Sliders.forEach($slider => {
             $slider.oninput = () => {
-                this.#React.View.updateDegDisplay(Array.from(this.#$Sliders)
-                    .map($slider => $slider.value));
+                this.#React.View.updateDegDisplay(this.getValues());
                 this.#sendCurrentData();
             };
         });
