@@ -15,14 +15,14 @@ const Config = {
     }
 };
 
-const arduinoServerConnection = new Arduino({
+const MyArduino = new Arduino({
     Xhr: new XMLHttpRequest(),
     Routes: {
         send: "/send",
     },
 });
 
-const liveControlEvents = new LiveControlEvents({
+const MyLiveControlEvents = new LiveControlEvents({
     Selectors: {
         sliders: Config.Selectors.SLIDERS,
         degDisplays: Config.Selectors.DEG_DISPLAYS,
@@ -38,10 +38,10 @@ const liveControlEvents = new LiveControlEvents({
     },
 });
 
-const liveControl = new LiveControl({
+const MyLiveControl = new LiveControl({
     React: {
-        Arduino: arduinoServerConnection,
-        View: liveControlEvents,
+        Arduino: MyArduino,
+        View: MyLiveControlEvents,
     },
     Selectors: {
         sliders: Config.Selectors.SLIDERS,
@@ -49,9 +49,9 @@ const liveControl = new LiveControl({
     },
 });
 
-const savedScenes = new SavedScenes({
+const MySavedScenes = new SavedScenes({
     React: {
-        LiveControl: liveControl,
+        LiveControl: MyLiveControl,
     },
     Selectors: {
         speedInput: Config.Selectors.SPEED_INPUT,
@@ -59,7 +59,7 @@ const savedScenes = new SavedScenes({
     }
 });
 
-const dragulaSetup = new Dragula({
+const MyDragula = new Dragula({
     Selectors: {
         Draggable: [
             Config.Selectors.SCENES_DRAGGABLE_CONTAINER,
@@ -67,6 +67,6 @@ const dragulaSetup = new Dragula({
     },
 });
 
-liveControl.start();
-savedScenes.start();
-dragulaSetup.setup();
+MyLiveControl.start();
+MySavedScenes.start();
+MyDragula.setup();
