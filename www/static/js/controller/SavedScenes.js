@@ -22,7 +22,8 @@ export default class SavedScenes {
         this.#$registerButton.addEventListener("click", () => {
             const vel = Number(this.#$speedInput.value);
 
-            // check the ui order before appending a new item to the list
+            this.#ScenesArray = this.#React.View.getCurrentScenes();
+
             this.#ScenesArray.push(new Scene(vel, this.#React.LiveControl.getValues()));
             this.#React.View.updateUi(this.#ScenesArray);
         });

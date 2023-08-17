@@ -1,6 +1,6 @@
 export default class Partials {
     static buildSceneItem(Scene, id) {
-        return `<li data-js-scene-command="${Scene.command}" data-js-scene-id="${id}" class="list-group-item d-flex justify-content-between p-2">
+        return `<li data-js-scene-item data-js-scene-speed="${Scene.data.speed}" data-js-scene-position="${Scene.data.position.join(",")}" data-js-scene-id="${id}" class="list-group-item d-flex justify-content-between p-2">
             <span style="font-family: monospace" class="text-bold text-center p-2">
                 <strong>
                     ${Scene.data.speed}/${Scene.data.position.join(",")}

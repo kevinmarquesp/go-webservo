@@ -76,6 +76,9 @@ const MyDragula = new Dragula({
     },
 });
 
-MyLiveControl.start();
-MySavedScenes.start();
 MyDragula.setup();
+
+MyLiveControl.start();
+
+MySavedScenes.start();
+MySavedScenesEvents.updateUi([]);
