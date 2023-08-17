@@ -12,7 +12,7 @@ export default class Partials {
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <button type="button" class="dropdown-item">
+                        <button data-js-scene-test-button type="button" class="dropdown-item">
                             Testar
                         </button>
                     </li>

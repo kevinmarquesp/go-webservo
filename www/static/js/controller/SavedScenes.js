@@ -1,4 +1,5 @@
 import Scene from "../model/Scene.js";
+import Arduino from "../model/Arduino.js";
 
 export default class SavedScenes {
     #$speedInput;
@@ -30,14 +31,30 @@ export default class SavedScenes {
             this.#React.View.updateUi(this.#ScenesArray);
 
             this.#setupDeleteButtonEventListener();
+            this.#setupTestButtonEventListener();
+        });
+    }
+
+    #setupTestButtonEventListener() {
+        this.#ScenesArray = this.#React.View.getCurrentScenes();
+
+        // todo: add this selector to a global config
+        const $TestButtons = document.querySelectorAll("[data-js-scene-test-button]");
+
+        // todo: create a lock value in this object to avoid multiple test sends
+        $TestButtons.forEach(($testButton, key) => {
+            $testButton.onclick = async () => {
+                this.#React.Arduino.send(this.#ScenesArray[key].command);
+                const res = await this.#React.Arduino.recive();
+
+                console.log(res);
+            };
         });
     }
 
     // todo: fix the bug of the order swap on deletion
     #setupDeleteButtonEventListener() {
         this.#ScenesArray = this.#React.View.getCurrentScenes();
-        this.#React.View.updateUi(this.#ScenesArray);
-        console.log(this.#ScenesArray);
 
         const $DeleteButtons = document.querySelectorAll(this.#deleteButtonSelector);
 
@@ -45,8 +62,10 @@ export default class SavedScenes {
             $delteButton.onclick = () => {
                 this.#ScenesArray.splice(key, 1);
 
+                // todo: abstract this sequence of function in a different method
                 this.#React.View.updateUi(this.#ScenesArray);
                 this.#setupDeleteButtonEventListener();
+                this.#setupTestButtonEventListener();
             };
         });
     }

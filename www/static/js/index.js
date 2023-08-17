@@ -62,6 +62,7 @@ const MySavedScenesEvents = new SavedScnesEvents({
 const MySavedScenes = new SavedScenes({
     React: {
         LiveControl: MyLiveControl,
+        Arduino: MyArduino,
         View: MySavedScenesEvents,
     },
     Selectors: {
