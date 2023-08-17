@@ -24,7 +24,7 @@ export default class SavedScenes {
 
             // check the ui order before appending a new item to the list
             this.#ScenesArray.push(new Scene(vel, this.#React.LiveControl.getValues()));
-            console.log(this.#ScenesArray);
+            this.#React.View.updateUi(this.#ScenesArray);
         });
     }
 }

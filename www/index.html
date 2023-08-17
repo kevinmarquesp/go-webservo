@@ -14,6 +14,9 @@
     <script defer src="static/js/vendor/bootstrap.min.js" charset="utf-8"></script>
     <script defer src="static/js/vendor/bootstrap.bundle.min.js" charset="utf-8"></script>
 
+    <link rel="stylesheet" href="static/css/vendor/dragula.min.css" media="all">
+    <script src="static/js/vendor/dragula.min.js" charset="utf-8"></script>
+
     <script defer type="module" src="static/js/index.js" charset="utf-8"></script>
     <link rel="stylesheet" href="static/css/main.css" media="all">
 
@@ -54,10 +57,10 @@
                     <div class="input-group w-50">
                       <span class="input-group-text bg-transparent text-primary">
                         Vel.
-                      </span>
-                      <input type="number" value="20" class="form-control text-center"/>
+                     </span>
+                      <input data-js-speed-input type="number" value="20" class="form-control text-center"/>
                     </div>
-                    <button type="button" class="btn btn-primary w-50">
+                    <button data-js-register-position type="button" class="btn btn-primary w-50">
                       Registrar
                     </button>
                   </div>
@@ -76,29 +79,9 @@
           <div id="savedScenesPane" class="accordion-collapse collapse" data-bs-parent="#accordionCards">
             <section class="accordion-body">
               <div id="savedScenes">
-
-                <ul class="list-group">
-
-                  <!-- componente que o javascript vai usar para construir a lista de cenas -->
-                  <li class="list-group-item d-flex justify-content-between p-2">
-                    <span style="font-family: monospace" class="text-bold text-center p-2">
-                      <strong>20/180,180,180,180,180,180</strong>
-                    </span>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        Opções
-                      </button>
-                      <ul class="dropdown-menu">
-                        <li><button type="button" class="dropdown-item">Testar</button></li>
-                        <li><button type="button" class="dropdown-item">Remover</button></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><button type="button" class="dropdown-item">Atualizar</button></li>
-                      </ul>
-                    </div>
-                  </li>
-
+                <ul data-js-scenes-list class="list-group" id="scenesDraggableContainer">
+                  <!-- this component will be filled up with javascript! -->
                 </ul>
-
               </div>
             </section>
           </div>

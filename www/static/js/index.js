@@ -3,6 +3,7 @@ import LiveControlEvents from "./view/LiveControlEvents.js";
 import LiveControl from "./controller/LiveControl.js";
 import Dragula from "./view/Dragula.js";
 import SavedScenes from "./controller/SavedScenes.js";
+import SavedScnesEvents from "./view/SavedScenesEvents.js";
 
 const Config = {
     Selectors: {
@@ -12,6 +13,7 @@ const Config = {
         SPEED_INPUT: "[data-js-speed-input]",
         REGISTER_POSITION_BUTTON: "[data-js-register-position]",
         SCENES_DRAGGABLE_CONTAINER: "#scenesDraggableContainer",
+        SCENES_LIST_COMPONENT: "[data-js-scenes-list]",
     }
 };
 
@@ -49,9 +51,16 @@ const MyLiveControl = new LiveControl({
     },
 });
 
+const MySavedScenesEvents = new SavedScnesEvents({
+    Selectors: {
+        listContainer: Config.Selectors.SCENES_LIST_COMPONENT,
+    }
+});
+
 const MySavedScenes = new SavedScenes({
     React: {
         LiveControl: MyLiveControl,
+        View: MySavedScenesEvents,
     },
     Selectors: {
         speedInput: Config.Selectors.SPEED_INPUT,
