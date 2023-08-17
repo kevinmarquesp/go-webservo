@@ -23,7 +23,8 @@ func startServer() {
     http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./www/static/"))))
 
     http.HandleFunc("/", controlers.RenderHomepage)
-    http.HandleFunc("/send", controlers.SenddataLiveservo)
+    http.HandleFunc("/send", controlers.SendData)
+    http.HandleFunc("/recive", controlers.ReciveData)
 
     views.Logger.Warn("Server configured and running on http://localhost:8080/")
     err := http.ListenAndServe(":8080", nil)

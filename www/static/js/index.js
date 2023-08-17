@@ -22,6 +22,7 @@ const MyArduino = new Arduino({
     Xhr: new XMLHttpRequest(),
     Routes: {
         send: "/send",
+        recive: "/recive",
     },
 });
 

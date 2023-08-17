@@ -1,6 +1,7 @@
 package controlers
 
 import (
+	"fmt"
 	"go-webservo/arduino"
 	"go-webservo/views"
 	"io"
@@ -23,10 +24,17 @@ func RenderHomepage(w http.ResponseWriter, r *http.Request) {
     try(err != nil, err)
 }
 
-func SenddataLiveservo(w http.ResponseWriter, r *http.Request) {
+func SendData(w http.ResponseWriter, r *http.Request) {
     rawbody, err := io.ReadAll(r.Body)
     try(err != nil, err)
 
     err = arduino.SendserialBytearray(rawbody)
     try(err != nil, err)
+}
+
+func ReciveData(w http.ResponseWriter, r *http.Request) {
+    res, err := arduino.GetSerialoutput()
+    try(err != nil, err)
+
+    fmt.Fprint(w, res)
 }
