@@ -17,7 +17,7 @@ export default class Partials {
                         </button>
                     </li>
                     <li>
-                        <button type="button" class="dropdown-item">
+                        <button data-js-scene-delete-button type="button" class="dropdown-item">
                             Remover
                         </button>
                     </li>

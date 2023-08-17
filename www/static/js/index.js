@@ -14,6 +14,7 @@ const Config = {
         REGISTER_POSITION_BUTTON: "[data-js-register-position]",
         SCENES_DRAGGABLE_CONTAINER: "#scenesDraggableContainer",
         SCENES_LIST_COMPONENT: "[data-js-scenes-list]",
+        DELETE_SCENE_BUTTON: "[data-js-scene-delete-button]",
     }
 };
 
@@ -65,9 +66,11 @@ const MySavedScenes = new SavedScenes({
     Selectors: {
         speedInput: Config.Selectors.SPEED_INPUT,
         registerButton: Config.Selectors.REGISTER_POSITION_BUTTON,
+        deleteButton: Config.Selectors.DELETE_SCENE_BUTTON,
     }
 });
 
+// todo: add a draggable component instead of the entire element
 const MyDragula = new Dragula({
     Selectors: {
         Draggable: [
@@ -79,6 +82,4 @@ const MyDragula = new Dragula({
 MyDragula.setup();
 
 MyLiveControl.start();
-
 MySavedScenes.start();
-MySavedScenesEvents.updateUi([]);
